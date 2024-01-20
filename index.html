@@ -6,16 +6,14 @@
 <body>
   <h1>MySQL Data Query</h1>
   
-  
   <form id="mysqlForm" action="/database-connection" method="post">
     <p>MySQL Data</p>
-    <input type="text" placeholder="MySQL Host" id="mysqlHost">
-    <input type="text" placeholder="Database Name" id="mysqlDatabase">
+    <input type="text" placeholder="MySQL Host" id="mysqlHost" name="host">
+    <input type="text" placeholder="Database Name" id="mysqlDatabase" name="database">
     <br>
-    <input type="text" placeholder="Username" id="mysqlUsername">
-    <input type="password" placeholder="Password" id="mysqlPassword">
+    <input type="text" placeholder="Username" id="mysqlUsername" name="username">
+    <input type="password" placeholder="Password" id="mysqlPassword" name="password">
   </form>
-  
   
   <p>MySQL Query</p>
   <textarea placeholder="Enter MySQL Query" id="mysqlQuery" style="padding: 10px; margin-top: 10px;width: 100%; height: 200px;overflow-y: auto;"></textarea>
