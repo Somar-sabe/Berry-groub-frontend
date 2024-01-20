@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MySQL Data Query</title>
+</head>
+<body>
+  <h1>MySQL Data Query</h1>
+  
+  
+  <form id="mysqlForm" action="/database-connection" method="post">
+    <p>MySQL Data</p>
+    <input type="text" placeholder="MySQL Host" id="mysqlHost">
+    <input type="text" placeholder="Database Name" id="mysqlDatabase">
+    <br>
+    <input type="text" placeholder="Username" id="mysqlUsername">
+    <input type="password" placeholder="Password" id="mysqlPassword">
+  </form>
+  
+  
+  <p>MySQL Query</p>
+  <textarea placeholder="Enter MySQL Query" id="mysqlQuery" style="padding: 10px; margin-top: 10px;width: 100%; height: 200px;overflow-y: auto;"></textarea>
+  <br>
+  <button onclick="executeQuery()">Search</button>
+  <div id="resultArea" style="border: 1px solid #ccc; padding: 10px; margin-top: 10px; height: 200px; overflow-y: auto;"></div>
+  
+  <script>
+    function executeQuery() {
+      const mysqlHost = document.getElementById('mysqlHost').value;
+      const mysqlDatabase = document.getElementById('mysqlDatabase').value;
+      const mysqlUsername = document.getElementById('mysqlUsername').value;
+      const mysqlPassword = document.getElementById('mysqlPassword').value;
+      const mysqlQuery = document.getElementById('mysqlQuery').value;
+  
+      const resultArea = document.getElementById('resultArea');
+      resultArea.innerText = `Executing MySQL query: ${mysqlQuery}`;
+  
+      // Send AJAX request to Laravel backend
+      fetch('/query-interface', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+        },
+        body: JSON.stringify({
+          host: mysqlHost,
+          database: mysqlDatabase,
+          username: mysqlUsername,
+          password: mysqlPassword,
+          query: mysqlQuery
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+        // Handle the response data and update the resultArea
+        resultArea.innerText = `Query Result: ${JSON.stringify(data)}`;
+      })
+      .catch(error => {
+        console.error('Error executing MySQL query:', error);
+        resultArea.innerText = 'Error executing MySQL query.';
+      });
+    }
+  </script>
+</body>
+</html>
